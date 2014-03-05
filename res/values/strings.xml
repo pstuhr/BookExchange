@@ -3,4 +3,7 @@
     <string name="app_name">BookExchange</string>
     <string name="action_search">Search</string>
     <string name="action_settings">Settings</string>
+    <string name="profile_tab">Profile</string>
+    <string name="buying_tab">Buying</string>
+    <string name="selling_tab">Selling</string>
 </resources>

@@ -1,64 +1,45 @@
 package com.example.BookExchange;
 
-import android.app.TabActivity;
-import android.content.Intent;
-import android.content.res.Resources;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TabHost;
 import android.widget.Toast;
 
 /**
  * Created by Phillip on 2/23/14.
  */
-public class BookExchange extends TabActivity {
+public class BookExchange extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Notice that setContentView() is not used, because we use the root
+        // android.R.id.content as the container for each fragment
 
-        Resources resources = getResources();
-        TabHost tabHost = getTabHost();
+        // setup action bar for tabs
+        ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setDisplayShowTitleEnabled(false);
 
-        // Left tab
-        Intent intentLeft = new Intent().setClass(this, left_tab.class);
-        TabHost.TabSpec tabSpecLeft = tabHost
-                .newTabSpec("Left")
-                .setIndicator("", resources.getDrawable(R.drawable.left_tab))
-                .setContent(intentLeft);
+        ActionBar.Tab tab = actionBar.newTab()
+                .setText(R.string.profile_tab)
+                .setTabListener(new TabListener<left_tab>(
+                        this, "Profile", left_tab.class));
+        actionBar.addTab(tab);
 
-        //Middle Tab
-        Intent intentMiddle = new Intent().setClass(this, middle_tab.class);
-        TabHost.TabSpec tabSpecMiddle = tabHost
-                .newTabSpec("Middle")
-                .setIndicator("",resources.getDrawable(R.drawable.middle_tab))
-                .setContent(intentMiddle);
+        tab = actionBar.newTab()
+                .setText(R.string.buying_tab)
+                .setTabListener(new TabListener<middle_tab>(
+                        this, "Buying", middle_tab.class));
+        actionBar.addTab(tab);
 
-        //Right Tab
-        Intent intentRight = new Intent().setClass(this, right_tab.class);
-        TabHost.TabSpec tabSpecRight = tabHost
-                .newTabSpec("Right")
-                .setIndicator("", resources.getDrawable(R.drawable.right_tab))
-                .setContent(intentRight);
-
-        //Add Tabs
-        tabHost.addTab(tabSpecLeft);
-        tabHost.addTab(tabSpecMiddle);
-        tabHost.addTab(tabSpecRight);
-
-        //Set Default
-        tabHost.setCurrentTab(0);
+        tab = actionBar.newTab()
+                .setText(R.string.selling_tab)
+                .setTabListener(new TabListener<right_tab>(
+                        this, "Selling", right_tab.class));
+        actionBar.addTab(tab);
     }
-
-//    private void createTab(String string, Class tabClass, Drawable tab) {
-//        Resources resources = getResources();
-//        TabHost tabHost = getTabHost();
-//        Intent intent = new Intent().setClass(this, tabClass);
-//        TabHost.TabSpec tabSpecRight = tabHost
-//                .newTabSpec(string)
-//                .setIndicator("", resources.getDrawable(R.drawable.tab))
-//                .setContent(intent);
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
